@@ -1,0 +1,563 @@
+/* ===========================
+   CSS Variables & Reset
+=========================== */
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --purple: #a855f7;
+    --success: #10b981;
+    --error: #ef4444;
+    --bg: #06091a;
+    --surface: rgba(15, 22, 45, 0.75);
+    --border: rgba(255, 255, 255, 0.07);
+    --border-active: rgba(99, 102, 241, 0.5);
+    --text: #f1f5f9;
+    --muted: #64748b;
+    --muted-light: #94a3b8;
+    --card-shadow: 0 32px 64px rgba(0, 0, 0, 0.6);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* ===========================
+   Animated Background
+=========================== */
+.bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.35;
+    animation: drift 18s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+    width: 600px; height: 600px;
+    top: -15%; left: -15%;
+    background: radial-gradient(circle at 40% 40%, #3b82f6, transparent 70%);
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 700px; height: 700px;
+    bottom: -20%; right: -15%;
+    background: radial-gradient(circle at 60% 60%, #7c3aed, transparent 70%);
+    animation-delay: -6s;
+}
+
+.orb-3 {
+    width: 400px; height: 400px;
+    top: 45%; left: 55%;
+    background: radial-gradient(circle, #ec4899, transparent 70%);
+    animation-delay: -12s;
+    opacity: 0.2;
+}
+
+@keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(40px, -60px) scale(1.12); }
+}
+
+/* Grid overlay */
+.grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+/* ===========================
+   Layout
+=========================== */
+.page-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* ===========================
+   Header
+=========================== */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #a5b4fc;
+}
+
+/* ===========================
+   Cards
+=========================== */
+.card {
+    background: var(--surface);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+    animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+
+/* Top edge glow */
+.card-glow {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(99,102,241,0.6), transparent);
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================
+   Card Header
+=========================== */
+.card-header {
+    margin-bottom: 1.75rem;
+}
+
+.card-header h1 {
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #fff 20%, #a5b4fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.card-header p {
+    font-size: 0.875rem;
+    color: var(--muted-light);
+    line-height: 1.6;
+}
+
+/* ===========================
+   Form
+=========================== */
+.field-wrapper {
+    margin-bottom: 1.25rem;
+}
+
+.field-wrapper label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted-light);
+    margin-bottom: 0.5rem;
+}
+
+.input-row {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+}
+
+.input-row input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    background: rgba(6, 9, 26, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.input-row input:focus {
+    outline: none;
+    border-color: var(--border-active);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.input-row input::placeholder {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+/* ===========================
+   Submit Button
+=========================== */
+#submit-btn {
+    width: 100%;
+    padding: 0.95rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+#submit-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(255,255,255,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+#submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -6px rgba(99, 102, 241, 0.6);
+}
+#submit-btn:hover:not(:disabled)::after { opacity: 1; }
+
+#submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+#submit-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ===========================
+   Progress Panel
+=========================== */
+#progress-panel {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 14px;
+    animation: fadeSlide 0.35s ease;
+}
+
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.progress-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+}
+
+/* Pulsing dot */
+.pulse-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+    animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.6); }
+    50% { box-shadow: 0 0 0 6px rgba(99,102,241,0); }
+}
+
+#progress-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #c7d2fe;
+}
+
+/* Progress Track */
+.progress-track {
+    height: 6px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary), var(--purple), #ec4899);
+    background-size: 200% 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+    animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+/* Stats Row */
+.progress-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    letter-spacing: -0.03em;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+}
+
+.stat-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--border);
+}
+
+/* ===========================
+   Status Toast
+=========================== */
+#status-toast {
+    margin-top: 1rem;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    animation: fadeSlide 0.3s ease;
+}
+
+#status-toast.success {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+#status-toast.error {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.toast-icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+}
+
+.success .toast-icon {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.error .toast-icon {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--error);
+}
+
+#toast-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.success #toast-title { color: #6ee7b7; }
+.error #toast-title   { color: #fca5a5; }
+
+.toast-sub {
+    font-size: 0.8rem;
+    color: var(--muted-light);
+    margin-top: 0.15rem;
+}
+
+.hidden { display: none !important; }
+
+/* ===========================
+   Instructions Card
+=========================== */
+.instructions-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.instructions-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: var(--text);
+    font-family: inherit;
+}
+
+.instructions-toggle:hover {
+    background: rgba(255,255,255,0.03);
+}
+
+.toggle-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #e2e8f0;
+}
+
+.toggle-left svg { color: var(--primary); }
+
+.chevron {
+    transition: transform 0.3s ease;
+    color: var(--muted);
+}
+
+.instructions-card.open .chevron {
+    transform: rotate(180deg);
+}
+
+.instructions-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0, 1, 0.5, 1);
+    border-top: 0 solid var(--border);
+}
+
+.instructions-card.open .instructions-body {
+    max-height: 600px;
+    border-top-width: 1px;
+    transition: max-height 0.45s ease-in-out;
+}
+
+.steps {
+    list-style: none;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: var(--muted-light);
+    line-height: 1.6;
+}
+
+.step-num {
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #a5b4fc;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.steps strong { color: #e2e8f0; }
+
+/* ===========================
+   Footer
+=========================== */
+.site-footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding-top: 0.5rem;
+}
